@@ -68,7 +68,7 @@ class LinkedList(object):
             # Skip to the next node
             node = node.next
         # Now node_count contains the number of nodes
-        return node_count
+        return self.size
 
     def get_at_index(self, index):
         """Return the item at the given index in this linked list, or
