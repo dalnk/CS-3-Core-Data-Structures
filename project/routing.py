@@ -1,23 +1,38 @@
 import sys
 
-def lookup(phone):
-    fname = "./data/route-costs-600.txt"
+def lookup_list(file):
+    with open(file) as f:
+        content = f.readlines()
+
+    for c in content:
+        print(lookup_cost(c))
+
+
+
+def lookup_cost(phone):
+    fname = "./data/route-costs-10.txt"
 
     with open(fname) as f:
         content = f.readlines()
 
-    content = [x.strip() for x in content]
-    prefix = 2
-    filtered = list(filter(lambda x: phone[:prefix] in x, content))
+    # create filter
+    reduce = lambda x: phone.startswith(x[:limit]), content
 
+    # check first 2 characters
+    limit = 2
+    # filter by first digit
+    filtered = list(filter(reduce(content)))
+
+    # init answer
     answer = None
+
+    # keep incrementing limit until you stop finding a match.
     while len(filtered) > 1:
         prefix = prefix + 1
-        # print(phone[:prefix] + ' ' + str(len(filtered)))
 
-        filter_after = list(filter(lambda x: phone[:prefix] in x, filtered))
+        # reduce the search area
+        filter_after = list(filter(reduce(filtered)))
         if( len(filter_after) < 1):
-            # print("henlo : " + phone + " vs " + filtered[0])
             answer = filtered[0]
             break
         filtered = filter_after
@@ -31,14 +46,7 @@ def lookup(phone):
     else:
         return "no route cost"
 
-def lookup_list(file):
-    with open(file) as f:
-        content = f.readlines()
-
-    for c in content:
-        print(lookup(c))
-
 
 
 if __name__ == "__main__":
-    lookup_list("./data/phone-numbers-1000.txt")
+    lookup_list("./data/phone-numbers-10.txt")
