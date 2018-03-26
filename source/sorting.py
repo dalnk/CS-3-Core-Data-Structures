@@ -8,6 +8,12 @@ def is_sorted(items):
     # TODO: Check that all adjacent items are in order, return early if not
 
 
+    for i in range(len(items)-1):
+        if items[i] > items[i+1]:
+            return False
+
+    return True
+
 def bubble_sort(items):
     """Sort given items by swapping adjacent items that are out of order, and
     repeating until all items are in sorted order.
@@ -46,6 +52,24 @@ def merge(items1, items2):
     # TODO: Find minimum item in both lists and append it to new list
     # TODO: Append remaining items in non-empty list to new list
 
+    output = []
+    left = right = 0
+
+    # quickly comparatively sort the arrays as out fill the output
+    while left < len(items1) and right < len(items2):
+        if items1[left] < items2[right]:
+            output.append(items1[left])
+            left += 1
+        else:
+            output.append(items2[right])
+            right += 1
+
+    # if there is anything left in either array slap it on the end
+    output.extend(items1[left:])
+    output.extend(items2[right:])
+    return output
+
+
 
 def split_sort_merge(items):
     """Sort given items by splitting list into two approximately equal halves,
@@ -67,7 +91,22 @@ def merge_sort(items):
     # TODO: Split items list into approximately equal halves
     # TODO: Sort each half by recursively calling merge sort
     # TODO: Merge sorted halves into one list in sorted order
+    if len(items) < 2:
+        return items
 
+    print(items)
+
+    # floor division pythonically
+    pivot = len(items) // 2
+
+    # call yourself on your smaller children
+    left = merge_sort(items[:pivot])
+    right = merge_sort(items[pivot:])
+
+    # pass up the happy family
+    sorted = merge(left,right)
+    print(sorted)
+    return sorted
 
 def partition(items, low, high):
     """Return index `p` after in-place partitioning given items in range
