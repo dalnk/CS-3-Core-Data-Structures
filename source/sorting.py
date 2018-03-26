@@ -22,6 +22,18 @@ def bubble_sort(items):
     # TODO: Repeat until all items are in sorted order
     # TODO: Swap adjacent items that are out of order
 
+    flag = True
+    while flag:
+        flag = False
+        for i in range(len(items)):
+            if items[i+1] < items[i]:
+                temp = items[i]
+                items[i] = items[i+1]
+                items[i+1] = temp
+                flag = True
+
+    return items
+
 
 def selection_sort(items):
     """Sort given items by finding minimum item, swapping it with first
@@ -81,6 +93,14 @@ def split_sort_merge(items):
     # TODO: Sort each half using any other sorting algorithm
     # TODO: Merge sorted halves into one list in sorted order
 
+    # pythonic halfway point
+    pivot = len(items) // 2
+
+    left = bubble_sort(items[:pivot])
+    right = bubble_sort(items[pivot:])
+
+    return merge(left,right)
+
 
 def merge_sort(items):
     """Sort given items by splitting list into two approximately equal halves,
@@ -105,7 +125,10 @@ def merge_sort(items):
 
     # pass up the happy family
     sorted = merge(left,right)
-    print(sorted)
+
+    # you won't believe the inefficiency of this solution!
+    for i in range(len(items)):
+        items[i] = sorted[i]
     return sorted
 
 def partition(items, low, high):
