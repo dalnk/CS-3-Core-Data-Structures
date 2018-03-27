@@ -86,22 +86,22 @@ class BinarySearchTree(object):
         # Handle the case where the tree is empty
         if self.is_empty():
             # TODO: Create a new root node
-            self.root = ...
+            self.root = new BinaryTreeNode(item)
             # TODO: Increase the tree size
-            self.size ...
+            self.size = 1
             return
         # Find the parent node of where the given item should be inserted
         parent = self._find_parent_node_recursive(item, self.root)
         # TODO: Check if the given item should be inserted left of parent node
-        if ...:
+        if parent.data > item:
             # TODO: Create a new node and set the parent's left child
-            parent.left = ...
+            parent.left = new BinaryTreeNode(item)
         # TODO: Check if the given item should be inserted right of parent node
-        elif ...:
+        elif parent.data < item:
             # TODO: Create a new node and set the parent's right child
-            parent.right = ...
+            parent.right = new BinaryTreeNode(item)
         # TODO: Increase the tree size
-        self.size ...
+        self.size += 1
 
     def _find_node_iterative(self, item):
         """Return the node containing the given item in this binary search tree,
@@ -225,12 +225,11 @@ class BinarySearchTree(object):
         Start at the given node and visit each node with the given function.
         TODO: Running time: ??? Why and under what conditions?
         TODO: Memory usage: ??? Why and under what conditions?"""
-        # TODO: Traverse left subtree, if it exists
-        ...
-        # TODO: Visit this node's data with given function
-        ...
-        # TODO: Traverse right subtree, if it exists
-        ...
+        if node.left is not None:
+            self._traverse_in_order_recursive(node.left, visit)
+        visit(node.data)
+        if node.right is not None:
+            self._traverse_in_order_recursive(node.right, visit)
 
     def _traverse_in_order_iterative(self, node, visit):
         """Traverse this binary tree with iterative in-order traversal (DFS).
