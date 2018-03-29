@@ -27,9 +27,9 @@ def lookup_cost(phone,fname):
         limit += 1
 
         # reduce the search area
-        smaller = filter(lambda x: x[:limit] in phone, small)
+        smaller = filter(lambda x: x[:limit] in phone, list(small))
         if( len(list(smaller)) < 1):
-            answer = small[0]
+            answer = list(small)[0]
             break
 
         # get rid of temp list
